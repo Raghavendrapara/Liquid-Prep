@@ -3,7 +3,8 @@ import { LiquidPrepParams } from '@common/params/liquid-prep-params';
 import { util } from '@common/utility';
 import { Weather } from './triggers';
 import { CloudantDBService } from './services/cloudant/cloudantDBService';
-import { BaseResponse } from './services/responses/baseResponse';
+import { ResponseService } from './services/responses/responseService';
+import { CropDataService } from './services/cropDataService';
 
 // Standard entry point for cloud functions
 export default function main(params: LiquidPrepParams) {
@@ -16,10 +17,10 @@ export default function main(params: LiquidPrepParams) {
       console.log('$data', result);
     }, (err) => {
       console.log(err);
-      const response = new BaseResponse();
+      const response = new ResponseService();
       resolve(response.errorResponse('API request is not responding as expected.'));
     }, () => {
-      const response = new BaseResponse();
+      const response = new ResponseService();
       resolve(response.generateResponse(result, null));
     });
   });
@@ -47,12 +48,14 @@ let action = {
     return fiveDaysWeatherInfo;
   },
   get_crop_list: (params: LiquidPrepParams) => {
-    let cloudantService = new CloudantDBService(params);
-    let cropList = cloudantService.getCropList();
+    /*let cloudantService = new CloudantDBService(params);
+    let cropList = cloudantService.getCropList();*/
+    let cropList = new CropDataService().getCropsList(params);
     return cropList;
   },
   get_crop_info: (params: LiquidPrepParams) => {
-    let cropInfo = new CloudantDBService(params).getCropInfo();
+    //let cropInfo = new CloudantDBService(params).getCropInfo();
+    let cropInfo = new CropDataService().getCropInfo(params);
     return cropInfo;
   },
   error: (msg) => {

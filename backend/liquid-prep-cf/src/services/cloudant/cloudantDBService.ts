@@ -6,7 +6,7 @@ export class CloudantDBService {
 
     private params: LiquidPrepParams;
     private cropList: any;
-    private cropInfo: any;
+    //private cropInfo: any;
     private couchDB;
 
     constructor(params: LiquidPrepParams){
@@ -50,12 +50,17 @@ export class CloudantDBService {
                  "type": "crop"
               },
               "fields": [
-                 "cropName"
+                 "_id"
                 ]
            }
-        console.log('crop list query: ', query);
-        this.cropList = this.couchDB.dbFind(query);
-        return this.cropList;
+            console.log('crop list query: ', query);
+            this.cropList = this.couchDB.dbFind(query);
+            this.cropList = this.cropList.docs
+            if (this.cropList) {
+                return this.cropList;
+            } else {
+                throw Error(ErrorMessages.CLOUDANT_DATABASE__DATA_ERROR);
+            }
         }
     }
 
@@ -70,8 +75,12 @@ export class CloudantDBService {
         console.log('cropName', cropName);
         let query = {"selector": {"_id": cropName}};
         console.log('crop info query: ', query);
-        this.cropInfo = this.couchDB.dbFind(query);
-
-        return this.cropInfo;
+        let cropData = this.couchDB.dbFind(query);
+        cropData = cropData.docs[0];
+        if (cropData._id) {
+            return cropData;
+        } else {
+            throw Error(ErrorMessages.CLOUDANT_DATABASE__DATA_ERROR);
+        }        
     }
 }

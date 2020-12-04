@@ -2,7 +2,7 @@ import { ApiResponse } from "src/constants/apiResponse";
 import { ErrorMessages } from "src/constants/errorMessages";
 import { APIResponse } from "src/models/apiResponse";
 
-export class BaseResponse {
+export class ResponseService {
 
     private headers: Object = {'Content-Type': 'application/json'};
 
