@@ -30,6 +30,7 @@ class CouchDBClass {
           observer.error(err);
         }
         else {
+          console.log('$$$cloudant:data', data);
           observer.next(data);
           observer.complete();
         }

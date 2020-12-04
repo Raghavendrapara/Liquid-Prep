@@ -5,15 +5,19 @@ import { CropsList } from '../models/cropsList';
 export class CropDataService {
 
     public getCropInfo(params) {
-        let cropInfo = new CloudantDBService(params).getCropInfo();
-        let cropData = new CropInformation(
-            cropInfo.type,
-            cropInfo.cropGrowthStage,
-            cropInfo.cropName,
-            cropInfo.index,
-            cropInfo._id,
-            cropInfo._rev);
-        return cropData;
+        //let cropInfo = new CloudantDBService(params).getCropInfo();
+        let cloudantDBService = new CloudantDBService(params);
+        cloudantDBService.getCropInfo().subscribe(cropInfo => {
+            let cropData = new CropInformation(
+                cropInfo.type,
+                cropInfo.cropGrowthStage,
+                cropInfo.cropName,
+                cropInfo.index,
+                cropInfo._id,
+                cropInfo._rev);
+            return cropData;
+        })
+        
     }
 
     public getCropsList(params) {

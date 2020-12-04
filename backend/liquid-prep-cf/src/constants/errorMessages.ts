@@ -9,7 +9,7 @@ export class ErrorMessages {
     // CLOUDANT ERRORS
     public static CLOUDANT_DATABASE_NAME_UNDEFINED: string = "Cloudant database name is not defined or null."
     public static CLOUDANT_DATABASE_URL_UNDEFINED: string = "Cloudant database URL is not defined or null."
-    public static CLOUDANT_DATABASE__DATA_ERROR: string = "Cloudant response data is not null or empty."
+    public static CLOUDANT_DATABASE__DATA_ERROR: string = "Cloudant database response data is null or empty."
 
     //CROPS
     public static CROP_NAME_UNDEFINED: string = "Crop name is not defined or null."
