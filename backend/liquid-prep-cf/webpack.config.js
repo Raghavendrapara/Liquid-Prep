@@ -1,7 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const CopyPlugin = require('copy-webpack-plugin');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const dist = 'dist';  // be aware 'dist' folder is also used for tsconfig output
 
 var nodeModules = {};
@@ -26,7 +24,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.json'],
     plugins: [
-      new TsConfigPathsPlugin({configFile: './tsconfig.json'})
     ],
     alias: {
       '@common/*': '../common/src'
